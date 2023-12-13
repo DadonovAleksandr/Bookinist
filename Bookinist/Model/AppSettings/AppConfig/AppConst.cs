@@ -11,7 +11,7 @@
             return _instance;
         }
 
-        public string AppName => "ProjectTemplate";
-        public string AppDesciption => "Шаблон проекта";
+        public string AppName => "Bookinist";
+        public string AppDesciption => "Проект изучения EF";
     }
 }

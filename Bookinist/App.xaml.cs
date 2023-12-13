@@ -26,6 +26,8 @@ namespace Bookinist
         public static IHost Host => _host ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs())
             .Build();
 
+        public static IServiceProvider Service => Host.Services;
+
         protected override async void OnStartup(StartupEventArgs e)
         {
             var prjVersion = new ProjectVersion(Assembly.GetExecutingAssembly());

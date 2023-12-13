@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookinist.DAL.Context;
 
-internal class BookinistDB : DbContext
+public class BookinistDB : DbContext
 {
     public DbSet<Book> Books { get; set; }
     public DbSet<Category> Categories { get; set; }

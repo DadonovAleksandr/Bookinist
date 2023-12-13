@@ -1,4 +1,5 @@
-﻿using Bookinist.Model;
+﻿using Bookinist.Data;
+using Bookinist.Model;
 using Bookinist.Model.AppSettings.AppConfig;
 using Bookinist.Service;
 using Bookinist.ViewModels;
@@ -49,6 +50,7 @@ namespace Bookinist
         }
 
         public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+            .AddDatabase(host.Configuration.GetSection("Database"))
             .RegisterServices()
             .RegisterViewModels();
 

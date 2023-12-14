@@ -96,8 +96,9 @@ namespace Bookinist.Data
             _sellers = Enumerable.Range(1, _sellersCount)
                 .Select(i => new Seller()
                 {
-                    Name = $"Продавец - Имя {i}",
-                    Surname = $"Продавец - Фамилия {i}"
+                    Name = $"Продавец-Имя {i}",
+                    Surname = $"Продавец-Фамилия {i}",
+                    Patronymic = $"Продавец-Отчество {i}"
                 })
                 .ToArray();
             await _db.Sellers.AddRangeAsync(_sellers);
@@ -116,8 +117,9 @@ namespace Bookinist.Data
             _buyers = Enumerable.Range(1, _buyersCount)
                 .Select(i => new Buyer()
                 {
-                    Name = $"Покупатель - Имя {i}",
-                    Surname = $"Покупатель - Фамилия {i}"
+                    Name = $"Покупатель-Имя {i}",
+                    Surname = $"Покупатель-Фамилия {i}",
+                    Patronymic = $"Покупатель-Отчество {i}"
                 })
                 .ToArray();
             await _db.Buyers.AddRangeAsync(_buyers);

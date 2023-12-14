@@ -27,7 +27,7 @@ namespace Bookinist
         public static IHost Host => _host ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs())
             .Build();
 
-        public static IServiceProvider Service => Host.Services;
+        public static IServiceProvider Services => Host.Services;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -35,8 +35,11 @@ namespace Bookinist
             _log.Debug($"Запуск приложения: {AppConst.Get().AppDesciption} {prjVersion.Version} билд от {prjVersion.BuildDate}");
             IsDesighnMode = false;
             var host = Host;
-            base.OnStartup(e);
 
+            using (var scope = Services.CreateScope())
+                scope.ServiceProvider.GetRequiredService<DBInitializer>().InitializeAsync().Wait();
+
+            base.OnStartup(e);
             await host.StartAsync().ConfigureAwait(false);
         }
 

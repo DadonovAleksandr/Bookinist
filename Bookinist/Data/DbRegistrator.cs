@@ -22,7 +22,8 @@ namespace Bookinist.Data
                         break;
                     default: throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
                 }
-            }
-            );
+            })
+            .AddTransient<DBInitializer>()
+            ;
     }
 }

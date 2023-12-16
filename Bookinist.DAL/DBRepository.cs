@@ -57,7 +57,7 @@ internal class DBRepository<T> : IRepository<T> where T : Entity, new()
     {
         _db.Remove(new T { Id = id });
         if (AutoSaveChange)
-            _db.SaveChanges();
+            _db.SaveChangesAsync(cancellation);
     }
 
     public void Updater(T item)

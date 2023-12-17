@@ -1,8 +1,11 @@
-﻿using Bookinist.Infrastructure.Commands;
+﻿using Bookinist.DAL.Entityes;
+using Bookinist.Infrastructure.Commands;
+using Bookinist.Interfaces;
 using Bookinist.Model.AppSettings.AppConfig;
 using Bookinist.Service.UserDialogService;
 using Bookinist.ViewModels.Base;
 using ProjectVersionInfo;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -13,15 +16,21 @@ namespace Bookinist.ViewModels.MainWindowVm
     {
         private readonly IAppConfig _appConfig;
         private readonly IUserDialogService _userDialogService;
+        private readonly IRepository<Book> _booksRepository;
+
         /* ------------------------------------------------------------------------------------------------------------ */
-        public MainWindowViewModel(IUserDialogService userDialogService)
+        public MainWindowViewModel(IUserDialogService userDialogService,
+            IRepository<Book> booksRepository)
         {
             _log.Debug($"Вызов конструктора {GetType().Name}");
             _appConfig = AppConfig.GetConfigFromDefaultPath();
             _userDialogService = userDialogService;
-
+            
             var prjVersion = new ProjectVersion(Assembly.GetExecutingAssembly());
             Title = $"{AppConst.Get().AppDesciption} {prjVersion.Version}";
+
+            _booksRepository = booksRepository;
+            var books = _booksRepository.Items.Take(10).ToArray();
 
             #region Commands
             Exit = new RelayCommand(OnExitExecuted, CanExitExecute);

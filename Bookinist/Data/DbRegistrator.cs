@@ -3,6 +3,7 @@ using System;
 using Bookinist.DAL.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Bookinist.DAL;
 
 namespace Bookinist.Data
 {
@@ -12,18 +13,19 @@ namespace Bookinist.Data
             .AddDbContext<BookinistDB>(opt =>
             {
                 var type = configuration["Type"];
-                switch(type)
+                switch (type)
                 {
-                    case "MSSQL": opt.UseSqlServer(configuration.GetConnectionString(type)); 
+                    case "MSSQL": opt.UseSqlServer(configuration.GetConnectionString(type));
                         break;
-                    case "SQLite": opt.UseSqlite(configuration.GetConnectionString(type)); 
+                    case "SQLite": opt.UseSqlite(configuration.GetConnectionString(type));
                         break;
-                    case "InMemory": opt.UseInMemoryDatabase("Bookinist.db"); 
+                    case "InMemory": opt.UseInMemoryDatabase("Bookinist.db");
                         break;
                     default: throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
                 }
             })
             .AddTransient<DBInitializer>()
+            .AddRepositoriesInDB()
             ;
     }
 }

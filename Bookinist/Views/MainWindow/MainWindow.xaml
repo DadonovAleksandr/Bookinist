@@ -7,7 +7,17 @@
         mc:Ignorable="d"
         DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}"
         Title="{Binding Title}" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+    <DockPanel>
+        <Menu IsMainMenu="True">
+            <MenuItem Header="Покупатели"/>
+            <MenuItem Header="Книги"/>
+            <MenuItem Header="Статистика"/>
+        </Menu>
+        <StatusBar>
+            <StatusBarItem Content="Готов"/>
+        </StatusBar>
+        <Grid>
+            
+        </Grid>
+    </DockPanel>
 </Window>

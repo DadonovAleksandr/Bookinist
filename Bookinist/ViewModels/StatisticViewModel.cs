@@ -1,9 +1,12 @@
 ﻿using Bookinist.DAL.Entityes;
 using Bookinist.Infrastructure.Commands;
 using Bookinist.Interfaces;
+using Bookinist.Model;
 using Bookinist.ViewModels.Base;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Bookinist.ViewModels
@@ -27,6 +30,8 @@ namespace Bookinist.ViewModels
             ComputeStatisticCommand = new RelayCommand(OnComputeStatisticCommandExecuted, CanComputeStatisticCommandExecute);
         }
 
+        public ObservableCollection<BestSellerInfo> BestSellers { get; } = new ObservableCollection<BestSellerInfo>();
+
         /* ------------------------------------------------------------------------------------------------------------ */
 
         #region Commands
@@ -36,22 +41,36 @@ namespace Bookinist.ViewModels
         private async void OnComputeStatisticCommandExecuted(object p)
         {
             BooksCount = await _booksRepository.Items.CountAsync();
-            var deals = _dealsRepository.Items;
-            var bestSellers = await deals.GroupBy(d => d.Book)
-                .Select(d => new 
-                {
-                    Book = d.Key,
-                    Count = d.Count()
-                })
-                .OrderByDescending(b => b.Count)
-                .Take(5)
-                .ToArrayAsync();
-
+            await ComputeDealsStatistiAsync();
         }
+
         private bool CanComputeStatisticCommandExecute(object p) => true;
         #endregion
 
         #endregion
+
+        private async Task ComputeDealsStatistiAsync()
+        {
+            var deals = _dealsRepository.Items;
+            var bestSellers = await deals.GroupBy(d => d.Book.Id)
+                .Select(d => new
+                {
+                    BookId = d.Key,
+                    Count = d.Count()
+                })
+                .OrderByDescending(deals => deals.Count)
+                .Take(5)
+                    .Join(_booksRepository.Items,
+                        deals => deals.BookId,
+                        book => book.Id,
+                        (deals, book) => new BestSellerInfo { Book = book, SellCount = deals.Count })
+                .ToArrayAsync();
+
+            BestSellers.Clear();
+            foreach (var item in bestSellers)
+                BestSellers.Add(item);
+
+        }
 
         /* ------------------------------------------------------------------------------------------------------------ */
 

@@ -9,7 +9,9 @@
         DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}"
         Title="{Binding Title}" Height="450" Width="800">
     <i:Interaction.Triggers>
-        <i:EventTrigger />
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ShowBooksViewCommand}"/>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
     <DockPanel>
         <Menu IsMainMenu="True">

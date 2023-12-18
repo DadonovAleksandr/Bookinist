@@ -24,9 +24,9 @@ namespace Bookinist.Data
         public async Task InitializeAsync()
         {
             var timer = Stopwatch.StartNew();
-            _logger.LogInformation("Инициализация БД ...");
-            await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
-            _logger.LogInformation($"Удаление существующей БД выполнена за {timer.ElapsedMilliseconds} мс");
+            //_logger.LogInformation("Инициализация БД ...");
+            //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+            //_logger.LogInformation($"Удаление существующей БД выполнена за {timer.ElapsedMilliseconds} мс");
             //_db.Database.EnsureCreated();
             _logger.LogInformation("Миграция БД ...");
             await _db.Database.MigrateAsync();

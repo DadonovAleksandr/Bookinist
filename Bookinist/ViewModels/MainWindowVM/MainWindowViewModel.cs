@@ -21,6 +21,7 @@ namespace Bookinist.ViewModels.MainWindowVm
         private readonly IRepository<Book> _booksRepository;
         private readonly IRepository<Seller> _sellersRepository;
         private readonly IRepository<Buyer> _buyersRepository;
+        private readonly IRepository<Deal> _dealsRepository;
         private readonly ISalesService _salesService;
 
 
@@ -30,6 +31,7 @@ namespace Bookinist.ViewModels.MainWindowVm
             IRepository<Book> booksRepository,
             IRepository<Seller> sellersRepository,
             IRepository<Buyer> buyersRepository,
+            IRepository<Deal> dealsRepository,
             ISalesService salesService
             )
         {
@@ -43,6 +45,7 @@ namespace Bookinist.ViewModels.MainWindowVm
             _booksRepository = booksRepository;
             _sellersRepository = sellersRepository;
             _buyersRepository = buyersRepository;
+            _dealsRepository = dealsRepository;
             _salesService = salesService;
             //var books = _booksRepository.Items.Take(10).ToArray();
 
@@ -96,7 +99,8 @@ namespace Bookinist.ViewModels.MainWindowVm
         private void OnShowStatisticViewCommandExecuted(object p) => CurrentModel = new StatisticViewModel(
             _booksRepository,
             _buyersRepository,
-            _sellersRepository);
+            _sellersRepository,
+            _dealsRepository);
         private bool CanShowStatisticViewCommandExecute(object p) => true;
         #endregion
 

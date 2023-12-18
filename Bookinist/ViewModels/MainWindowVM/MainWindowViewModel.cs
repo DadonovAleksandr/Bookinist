@@ -44,7 +44,7 @@ namespace Bookinist.ViewModels.MainWindowVm
             _sellersRepository = sellersRepository;
             _buyersRepository = buyersRepository;
             _salesService = salesService;
-            var books = _booksRepository.Items.Take(10).ToArray();
+            //var books = _booksRepository.Items.Take(10).ToArray();
 
             #region Commands
             Exit = new RelayCommand(OnExitExecuted, CanExitExecute);

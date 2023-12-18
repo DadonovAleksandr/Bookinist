@@ -9,6 +9,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ProjectWPF.Styles;component/Styles/TextBoxes/TaggedTextBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ProjectWPF.Styles;component/Styles/CheckBoxes/SwitcherCheckBox.xaml"/>
+                <ResourceDictionary Source="Styles/Main.xaml"/>
+                <!--<ResourceDictionary Source="Templates/ModelMainView.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator"/>
         </ResourceDictionary>

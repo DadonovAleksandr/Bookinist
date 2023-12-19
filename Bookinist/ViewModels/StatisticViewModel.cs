@@ -1,4 +1,5 @@
 ﻿using Bookinist.DAL.Entityes;
+using Bookinist.Helpers;
 using Bookinist.Infrastructure.Commands;
 using Bookinist.Interfaces;
 using Bookinist.Model;
@@ -56,19 +57,19 @@ namespace Bookinist.ViewModels
                 .Select(d => new
                 {
                     BookId = d.Key,
-                    Count = d.Count()
+                    Count = d.Count(),
+                    Sum = d.Sum(d => d.Price)
                 })
                 .OrderByDescending(deals => deals.Count)
                 .Take(5)
                     .Join(_booksRepository.Items,
                         deals => deals.BookId,
                         book => book.Id,
-                        (deals, book) => new BestSellerInfo { Book = book, SellCount = deals.Count })
+                        (deals, book) => new BestSellerInfo { Book = book, SellCount = deals.Count, SumCost = deals.Sum })
                 .ToArrayAsync();
 
-            BestSellers.Clear();
-            foreach (var item in bestSellers)
-                BestSellers.Add(item);
+            BestSellers.AddClear(bestSellers);
+           
 
         }
 

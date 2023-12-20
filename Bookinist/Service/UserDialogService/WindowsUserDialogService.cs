@@ -1,4 +1,7 @@
-﻿using Bookinist.Views;
+﻿using Bookinist.DAL.Entityes;
+using Bookinist.ViewModels;
+using Bookinist.Views;
+using Bookinist.Views.Windows;
 using System;
 using System.Linq;
 using System.Threading;
@@ -17,6 +20,20 @@ namespace Bookinist.Service.UserDialogService
             .FirstOrDefault(w => w.IsFocused);
 
         public static Window CurrentWindow => FocusedWindow ?? ActiveWindow;
+
+        public bool Edit (Book book)
+        {
+            var bookEditorModel = new BookEditorWindowViewModel(book);
+            var bookEditorWindow = new BookEditorWindow
+            {
+                DataContext = bookEditorModel
+            };
+            if(bookEditorWindow.ShowDialog() != true )
+                return false;
+
+            book.Name = bookEditorModel.Name;
+            return true;
+        }
 
         public void ShowInformation(string message) => MessageBox
             .Show(ActiveWindow, message, "Информация", MessageBoxButton.OK, MessageBoxImage.Information);

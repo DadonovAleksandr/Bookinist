@@ -48,7 +48,10 @@ internal class DBRepository<T> : IRepository<T> where T : Entity, new()
 
     public void Remove(int id)
     {
-        _db.Remove(new T { Id = id });
+        var item = Items.SingleOrDefault(x => x.Id == id) ?? new T { Id = id };
+        if (item is null)
+            throw new ArgumentNullException();
+        _db.Remove(item);
         if(AutoSaveChange) 
             _db.SaveChanges();
     }

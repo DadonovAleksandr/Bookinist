@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
 	<StartupObject>Bookinist.Program</StartupObject>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<UserSecretsId>ee48ecd0-ab61-41fa-95ea-3af1ef6dffb5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

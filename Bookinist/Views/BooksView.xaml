@@ -6,9 +6,15 @@
              xmlns:local="clr-namespace:Bookinist.Views"
              xmlns:vm="clr-namespace:Bookinist.ViewModels"
              xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance {x:Type vm:BooksViewModel}, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -25,14 +31,17 @@
             </GroupBox.Resources>
             <DockPanel>
                 <TextBox DockPanel.Dock="Top" Text="{Binding BooksFilter, UpdateSourceTrigger=PropertyChanged}"/>
-                <ListBox MinWidth="140" ItemsSource="{Binding BooksView}">
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1">
+                    <Button Content="Add" Margin="3" Command="{Binding AddBookCommand}"/>
+                    <Button Content="Remove" Margin="3" Command="{Binding RemoveBookCommand}" CommandParameter="{Binding SelectedBook}"/>
+                </UniformGrid>
+                <ListBox MinWidth="140" ItemsSource="{Binding BooksView}" SelectedItem="{Binding SelectedBook}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" ToolTip="{Binding Category.Name}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-
             </DockPanel>
             
 

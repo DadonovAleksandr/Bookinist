@@ -1,4 +1,5 @@
-﻿using Bookinist.DAL.Entityes;
+﻿
+using Bookinist.DAL.Entityes;
 using Bookinist.Infrastructure.Commands;
 using Bookinist.Interfaces;
 using Bookinist.Model.AppSettings.AppConfig;
@@ -84,7 +85,7 @@ namespace Bookinist.ViewModels.MainWindowVm
 
         #region ShowBooksViewCommand
         public ICommand ShowBooksViewCommand { get; }
-        private void OnShowBooksViewCommandExecuted(object p) => CurrentModel = new BooksViewModel(_booksRepository);
+        private void OnShowBooksViewCommandExecuted(object p) => CurrentModel = new BooksViewModel(_booksRepository, _userDialogService);
         private bool CanShowBooksViewCommandExecute(object p) => true;
         #endregion
 

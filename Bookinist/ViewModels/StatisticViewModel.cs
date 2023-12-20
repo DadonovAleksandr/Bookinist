@@ -28,6 +28,7 @@ namespace Bookinist.ViewModels
             _buyersRepository = buyersRepository;
             _sellersRepository = sellersRepository;
             _dealsRepository = dealsRepository;
+
             ComputeStatisticCommand = new RelayCommand(OnComputeStatisticCommandExecuted, CanComputeStatisticCommandExecute);
         }
 

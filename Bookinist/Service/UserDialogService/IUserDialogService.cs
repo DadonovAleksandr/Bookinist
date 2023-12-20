@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookinist.DAL.Entityes;
+using System;
 using System.Threading;
 
 namespace Bookinist.Service.UserDialogService
@@ -11,5 +12,6 @@ namespace Bookinist.Service.UserDialogService
         bool Confirm(string message, bool exclamation = false);
 
         (IProgress<double> Progress, IProgress<string> Status, CancellationToken Cancel, Action Close) ShowProgress(string title);
+        bool Edit(Book book);
     }
 }

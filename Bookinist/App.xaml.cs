@@ -1,4 +1,5 @@
-﻿using Bookinist.Model;
+﻿using Bookinist.Data;
+using Bookinist.Model;
 using Bookinist.Model.AppSettings.AppConfig;
 using Bookinist.Service;
 using Bookinist.ViewModels;
@@ -26,14 +27,19 @@ namespace Bookinist
         public static IHost Host => _host ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs())
             .Build();
 
+        public static IServiceProvider Services => Host.Services;
+
         protected override async void OnStartup(StartupEventArgs e)
         {
             var prjVersion = new ProjectVersion(Assembly.GetExecutingAssembly());
             _log.Debug($"Запуск приложения: {AppConst.Get().AppDesciption} {prjVersion.Version} билд от {prjVersion.BuildDate}");
             IsDesighnMode = false;
             var host = Host;
-            base.OnStartup(e);
 
+            using (var scope = Services.CreateScope())
+                await scope.ServiceProvider.GetRequiredService<DBInitializer>().InitializeAsync(); //.Wait();
+
+            base.OnStartup(e);
             await host.StartAsync().ConfigureAwait(false);
         }
 
@@ -47,6 +53,7 @@ namespace Bookinist
         }
 
         public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+            .AddDatabase(host.Configuration.GetSection("Database"))
             .RegisterServices()
             .RegisterViewModels();
 
